@@ -9,29 +9,34 @@ use Wovosoft\LaravelCashier\Models\Payment;
 class IncomeMutator
 {
     public Payment $payment;
-    public string  $type;
-    public ?int    $ownerId = null;
+
+    public string $type;
+
+    public ?int $ownerId = null;
 
     public static function init(): static
     {
-        return new static();
+        return new static;
     }
 
     public function setType(string $type): static
     {
         $this->type = $type;
+
         return $this;
     }
 
     public function setPayment(Payment $payment): static
     {
         $this->payment = $payment;
+
         return $this;
     }
 
     public function setOwnerId(?int $ownerId = null): static
     {
         $this->ownerId = $ownerId;
+
         return $this;
     }
 
@@ -40,12 +45,12 @@ class IncomeMutator
      */
     public function process(): Income
     {
-        $income = new Income();
+        $income = new Income;
         $income->forceFill([
             'payment_id' => $this->payment->id,
-            'owner_id'   => $this->ownerId,
-            'type'       => $this->type,
-            'amount'     => $this->type == 'admin' ? $this->payment->admin_fee : $this->payment->agent_fee
+            'owner_id' => $this->ownerId,
+            'type' => $this->type,
+            'amount' => $this->type == 'admin' ? $this->payment->admin_fee : $this->payment->agent_fee,
         ]);
         $income->saveOrFail();
 
@@ -54,7 +59,7 @@ class IncomeMutator
             ->make(
                 type     : TransactionType::Credit,
                 amount   : $income->amount,
-                reference: "Income : ".$income->id
+                reference: 'Income : '.$income->id
             );
 
         return $income;

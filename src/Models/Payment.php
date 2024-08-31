@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Wovosoft\LaravelCashier\Enums\PaymentStatus;
 
 /**
- * 
- *
  * @property int $id
  * @property int|null $created_by_id
  * @property int|null $slip_id
@@ -30,6 +28,7 @@ use Wovosoft\LaravelCashier\Enums\PaymentStatus;
  * @property-read bool $is_failed
  * @property-read bool $is_returned
  * @property-read Slip|null $slip
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Payment query()
@@ -45,6 +44,7 @@ use Wovosoft\LaravelCashier\Enums\PaymentStatus;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereSlipId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Payment extends Model
@@ -55,12 +55,12 @@ class Payment extends Model
     {
         return [
             'payment_amount' => 'float',
-            'admin_fee'      => 'float',
-            'agent_fee'      => 'float',
-            'status'         => PaymentStatus::class,
-            'completed_at'   => 'datetime',
-            'failed_at'      => 'datetime',
-            'returned_at'    => 'datetime',
+            'admin_fee' => 'float',
+            'agent_fee' => 'float',
+            'status' => PaymentStatus::class,
+            'completed_at' => 'datetime',
+            'failed_at' => 'datetime',
+            'returned_at' => 'datetime',
         ];
     }
 
@@ -76,16 +76,16 @@ class Payment extends Model
 
     public function isCompleted(): Attribute
     {
-        return Attribute::get(fn(): bool => !is_null($this->completed_at));
+        return Attribute::get(fn (): bool => ! is_null($this->completed_at));
     }
 
     public function isFailed(): Attribute
     {
-        return Attribute::get(fn(): bool => !is_null($this->failed_at));
+        return Attribute::get(fn (): bool => ! is_null($this->failed_at));
     }
 
     public function isReturned(): Attribute
     {
-        return Attribute::get(fn(): bool => !is_null($this->returned_at));
+        return Attribute::get(fn (): bool => ! is_null($this->returned_at));
     }
 }

@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Wovosoft\LaravelCashier\Enums\TransactionType;
 
 /**
- * 
- *
  * @property int $id
  * @property string|null $reference
  * @property TransactionType $type
@@ -21,6 +19,7 @@ use Wovosoft\LaravelCashier\Enums\TransactionType;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read User|null $createdBy
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction query()
@@ -33,6 +32,7 @@ use Wovosoft\LaravelCashier\Enums\TransactionType;
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereReference($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Transaction extends Model
@@ -42,7 +42,7 @@ class Transaction extends Model
     protected function casts(): array
     {
         return [
-            'type'   => TransactionType::class,
+            'type' => TransactionType::class,
             'amount' => 'decimal:2',
         ];
     }

@@ -16,13 +16,7 @@ class BalanceCheck
         return ($user instanceof User ? $user->balance : User::find($user)?->balance) ?? 0;
     }
 
-    public static function totalIncome()
-    {
+    public static function totalIncome() {}
 
-    }
-
-    public static function availableIncome()
-    {
-
-    }
+    public static function availableIncome() {}
 }

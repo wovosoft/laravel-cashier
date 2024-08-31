@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * 
- *
  * @property int $id
  * @property int $payment_id
  * @property int|null $owner_id
@@ -16,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $amount
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static Builder|Income adminIncome()
  * @method static Builder|Income agentIncome()
  * @method static Builder|Income newModelQuery()
@@ -28,6 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static Builder|Income wherePaymentId($value)
  * @method static Builder|Income whereType($value)
  * @method static Builder|Income whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Income extends Model

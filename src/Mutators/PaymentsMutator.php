@@ -6,52 +6,59 @@ use App\Models\Slip;
 use Illuminate\Support\Fluent;
 use Wovosoft\LaravelCashier\Enums\PaymentStatus;
 use Wovosoft\LaravelCashier\Enums\TransactionType;
-use Wovosoft\LaravelCashier\Models\Income;
 use Wovosoft\LaravelCashier\Models\Payment;
-use Wovosoft\LaravelCashier\Models\Transaction;
 
 class PaymentsMutator
 {
-    private Payment       $payment;
-    private int|float     $adminFee      = 0;
-    private int|float     $agentFee      = 0;
-    private int|float     $paymentAmount = 0;
-    private Slip          $slip;
+    private Payment $payment;
+
+    private int|float $adminFee = 0;
+
+    private int|float $agentFee = 0;
+
+    private int|float $paymentAmount = 0;
+
+    private Slip $slip;
+
     private PaymentStatus $paymentStatus;
 
     public static function init(): static
     {
-        return new static();
+        return new static;
     }
-
 
     public function setAdminFee(int|float $fee): static
     {
         $this->adminFee = $fee;
+
         return $this;
     }
 
     public function setAgentFee(int|float $fee): static
     {
         $this->agentFee = $fee;
+
         return $this;
     }
 
     public function setPaymentAmount(int|float $amount): static
     {
         $this->paymentAmount = $amount;
+
         return $this;
     }
 
     public function setSlip(Slip $slip): static
     {
         $this->slip = $slip;
+
         return $this;
     }
 
     public function setPaymentStatus(PaymentStatus $status): static
     {
         $this->paymentStatus = $status;
+
         return $this;
     }
 
@@ -68,6 +75,7 @@ class PaymentsMutator
     public function setPayment(Payment $payment): static
     {
         $this->payment = $payment;
+
         return $this;
     }
 
@@ -81,9 +89,9 @@ class PaymentsMutator
                 'completed_at' => null,
                 //if returning funds to the customer is happened by another process then adjust it from that process
                 //otherwise, set it to current timestamp
-                'returned_at'  => now(),
-                'failed_at'    => now(),
-                'status'       => PaymentStatus::Failed
+                'returned_at' => now(),
+                'failed_at' => now(),
+                'status' => PaymentStatus::Failed,
             ])
             ->saveOrFail();
 
@@ -96,7 +104,7 @@ class PaymentsMutator
             ->make(
                 type     : TransactionType::Debit,
                 amount   : $this->payment->payment_amount,
-                reference: "Refunded : ".$this->payment->id
+                reference: 'Refunded : '.$this->payment->id
             );
 
         return $this->payment;
@@ -104,6 +112,7 @@ class PaymentsMutator
 
     /**
      * Access Returned Data: {payment, adminIncome, agentIncome} or [payment, adminIncome, agentIncome]
+     *
      * @throws \Throwable
      */
     public function completePayment(): Fluent
@@ -111,9 +120,9 @@ class PaymentsMutator
         $this->payment
             ->forceFill([
                 'completed_at' => now(),
-                'returned_at'  => null,
-                'failed_at'    => null,
-                'status'       => PaymentStatus::Completed
+                'returned_at' => null,
+                'failed_at' => null,
+                'status' => PaymentStatus::Completed,
             ])
             ->saveOrFail();
 
@@ -135,9 +144,9 @@ class PaymentsMutator
         }
 
         return fluent([
-            'payment'     => $this->payment,
+            'payment' => $this->payment,
             'adminIncome' => $adminIncome,
-            'agentIncome' => $agentIncome
+            'agentIncome' => $agentIncome,
         ]);
     }
 }

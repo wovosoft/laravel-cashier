@@ -5,7 +5,8 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Wovosoft\LaravelCashier\Enums\PaymentStatus;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -66,7 +67,6 @@ return new class extends Migration {
              * is returned to the user's account
              */
             $table->dateTime('returned_at')->nullable();
-
 
             $table->timestamps();
         });
