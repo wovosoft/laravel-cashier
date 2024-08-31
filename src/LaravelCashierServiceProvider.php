@@ -1,25 +1,26 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace Wovosoft\LaravelCashier;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use Wovosoft\LaravelCashier\Commands\LaravelCashierCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class LaravelCashierServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         /*
          * This class is a Package Service Provider
          *
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('laravel-cashier')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasMigrations()
+            ->hasCommand(LaravelCashierCommand::class);
     }
 }
