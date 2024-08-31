@@ -27,6 +27,26 @@ class PaymentsMutator
         return new static;
     }
 
+    /**
+     * @throws \Throwable
+     */
+    public function create(): Payment
+    {
+        $this->payment = new Payment;
+        $this->payment->forceFill([
+            'admin_fee'      => $this->adminFee,
+            'agent_fee'      => $this->agentFee,
+            'payment_amount' => $this->paymentAmount,
+            'status'         => $this->paymentStatus,
+            'slip_id'        => $this->slip->id,
+            'created_by_id'  => auth()->id(),
+        ]);
+
+        $this->payment->saveOrFail();
+
+        return $this->payment;
+    }
+
     public function setAdminFee(int|float $fee): static
     {
         $this->adminFee = $fee;
@@ -89,9 +109,9 @@ class PaymentsMutator
                 'completed_at' => null,
                 //if returning funds to the customer is happened by another process then adjust it from that process
                 //otherwise, set it to current timestamp
-                'returned_at' => now(),
-                'failed_at' => now(),
-                'status' => PaymentStatus::Failed,
+                'returned_at'  => now(),
+                'failed_at'    => now(),
+                'status'       => PaymentStatus::Failed,
             ])
             ->saveOrFail();
 
@@ -120,9 +140,9 @@ class PaymentsMutator
         $this->payment
             ->forceFill([
                 'completed_at' => now(),
-                'returned_at' => null,
-                'failed_at' => null,
-                'status' => PaymentStatus::Completed,
+                'returned_at'  => null,
+                'failed_at'    => null,
+                'status'       => PaymentStatus::Completed,
             ])
             ->saveOrFail();
 
@@ -144,7 +164,7 @@ class PaymentsMutator
         }
 
         return fluent([
-            'payment' => $this->payment,
+            'payment'     => $this->payment,
             'adminIncome' => $adminIncome,
             'agentIncome' => $agentIncome,
         ]);

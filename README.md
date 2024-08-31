@@ -1,5 +1,24 @@
 # Payment Mutator
 
+## Make Payment Log
+
+```php
+<?php
+use Wovosoft\LaravelCashier\Models\Payment;
+use Wovosoft\LaravelCashier\Mutators\PaymentsMutator;
+
+$slip=\App\Models\Slip::first();
+
+
+$payment= PaymentsMutator::init()
+    ->setAdminFee(300)
+    ->setAgentFee(200)
+    ->setPaymentAmount(1000)
+    ->setSlip($slip)
+    ->setPaymentStatus($this->payment->status)
+    ->create();
+```
+
 ## Make Payment Successful
 
 Use PaymentMutator Mutator class. This automatically processes payment as successful.
@@ -17,7 +36,6 @@ $payment=\Wovosoft\LaravelCashier\Models\Payment::first();
 //i.e. adjust balance, creates transaction logs
 $mutator = PaymentMutator::init()
     ->setPayment($payment)  //set payment model
-    ->fromPayment()     //set payment data from payment model
     ->completePayment(); //complete payment
 ```
 
